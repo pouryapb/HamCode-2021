@@ -1,26 +1,30 @@
 document.getElementById("submit").addEventListener("click", function () {
   const n = document.getElementById("number").value;
-  printSierpinski(n);
+  document.getElementById("container").innerHTML = "";
+  document.getElementById("submit").disabled = true;
+  printSierpinski(Math.pow(2, n));
+  document.getElementById("submit").disabled = false;
 });
+
+const filledBlock = '<div class="block active"></div>';
+const hiddenBlock = '<div class="block"></div>';
 
 function printSierpinski(n) {
   const container = document.getElementById("container");
   for (var y = n - 1; y >= 0; y--) {
-    if (t === n - 1) continue;
     const row = document.createElement("div");
     row.classList.add("row");
-    // for (var i = 0; i < y; i++) {
-    //   row.innerHTML += '<div class="block"></div>';
-    // }
+
+    let flag = false;
 
     for (var x = 0; x + y < n; x++) {
       if ((x & y) != 0) {
-        for (var t = 0; t < 3; t++) {
-          row.innerHTML += '<div class="block"></div>';
-        }
+        row.innerHTML += hiddenBlock;
+      } else if (!flag) {
+        flag = true;
+        row.innerHTML += filledBlock;
       } else {
-        row.innerHTML += '<div class="block active"></div>';
-        row.innerHTML += '<div class="block"></div>';
+        row.innerHTML += filledBlock;
       }
     }
     container.appendChild(row);
